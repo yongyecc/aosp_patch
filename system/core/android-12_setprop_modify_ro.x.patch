@@ -1,0 +1,23 @@
+diff --git a/init/property_service.cpp b/init/property_service.cpp
+index 2d67bf5..92bb6c7 100644
+--- a/init/property_service.cpp
++++ b/init/property_service.cpp
+@@ -187,11 +187,13 @@ static uint32_t PropertySet(const std::string& name, const std::string& value, s
+ 
+     prop_info* pi = (prop_info*) __system_property_find(name.c_str());
+     if (pi != nullptr) {
+-        // ro.* properties are actually "write-once".
+-        if (StartsWith(name, "ro.")) {
+-            *error = "Read-only property was already set";
+-            return PROP_ERROR_READ_ONLY_PROPERTY;
+-        }
++//ycc patch: 取消setprop限制
++//        // ro.* properties are actually "write-once".
++//        if (StartsWith(name, "ro.")) {
++//            *error = "Read-only property was already set";
++//            return PROP_ERROR_READ_ONLY_PROPERTY;
++//        }
++//ycc end patch
+ 
+         __system_property_update(pi, value.c_str(), valuelen);
+     } else {

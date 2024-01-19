@@ -5,4 +5,4 @@ Android源码(AOSP)上一些自定义功能实现的patch
 
 项|描述
 :--:|:--
-system/core/fix-ro.-prop-rw.patch|使setprop可以修改ro.开头的属性值，通过注释掉对ro.开头属性的检查实现。
+system/core/android-12_setprop_modify_ro.x.patch|解决setprop无法修改ro.xx系统属性问题
