@@ -1,0 +1,28 @@
+diff --git a/core/java/android/os/Build.java b/core/java/android/os/Build.java
+index b7dd36e2..ab01a8bb 100755
+--- a/core/java/android/os/Build.java
++++ b/core/java/android/os/Build.java
+@@ -1155,7 +1155,9 @@ public class Build {
+      * partitions, so we might derive the fingerprint at runtime.
+      */
+     private static String deriveFingerprint() {
+-        String finger = SystemProperties.get("ro.build.fingerprint");
++//ycc patch: fix modify Build.FINGERPRINT failed.
++        String finger = getString("ro.build.fingerprint");
++//end ycc
+         if (TextUtils.isEmpty(finger)) {
+             finger = getString("ro.product.brand") + '/' +
+                     getString("ro.product.name") + '/' +
+@@ -1440,6 +1442,12 @@ public class Build {
+ 
+     @UnsupportedAppUsage
+     private static String getString(String property) {
++//ycc: patch
++	String v = SystemProperties.get("persist.var." + property, UNKNOWN);
++	if (!v.equals(UNKNOWN)) {
++	    return v; 
++	}
++//ycc: end patch
+         return SystemProperties.get(property, UNKNOWN);
+     }
+ 
